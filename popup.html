@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatGPT Agent Exporter</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-group">
+        <img src="icons/icon48.png" alt="Logo" class="logo-icon">
+        <div>
+          <h1 class="title">Agent Exporter</h1>
+          <p class="subtitle">Rich JSONL for LLM Agents</p>
+        </div>
+      </div>
+      <span id="status-badge" class="badge badge-checking">Checking...</span>
+    </header>
+
+    <!-- Main Content -->
+    <main class="content">
+      <!-- Chat Info Card -->
+      <section id="chat-card" class="card">
+        <div class="card-header">
+          <span class="card-label">Active Conversation</span>
+        </div>
+        <div id="chat-details">
+          <div class="chat-title" id="detected-title">Scanning page...</div>
+          <div class="chat-id" id="detected-id">Detecting conversation ID...</div>
+        </div>
+      </section>
+
+      <!-- Not On ChatGPT Alert (hidden by default) -->
+      <div id="not-chatgpt-alert" class="alert hidden">
+        <p>⚠️ Please open a conversation on <strong>chatgpt.com</strong> first.</p>
+        <button id="open-chatgpt-btn" class="btn btn-secondary">Open ChatGPT</button>
+      </div>
+
+      <!-- Format Selection -->
+      <section class="section">
+        <label class="section-label">Export Format</label>
+        <div class="radio-group">
+          <label class="radio-card">
+            <input type="radio" name="export-format" value="conversation" checked>
+            <div class="radio-content">
+              <span class="radio-title">Agent Dataset (Recommended)</span>
+              <span class="radio-desc">Multi-turn JSONL with tools, thought chains & prompts</span>
+            </div>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="export-format" value="steps">
+            <div class="radio-content">
+              <span class="radio-title">Trajectory Steps JSONL</span>
+              <span class="radio-desc">One step per line for step-by-step agent replay</span>
+            </div>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="export-format" value="raw">
+            <div class="radio-content">
+              <span class="radio-title">Lossless Raw Graph (JSON)</span>
+              <span class="radio-desc">Complete uncompressed node graph dump</span>
+            </div>
+          </label>
+        </div>
+      </section>
+
+      <!-- Rich Options -->
+      <section class="section">
+        <label class="section-label">Rich Attributes</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item">
+            <input type="checkbox" id="opt-thoughts" checked>
+            <span>Include Model Thoughts & Reasoning</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="opt-tools" checked>
+            <span>Capture Container, Python & Web Tools</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="opt-citations" checked>
+            <span>Include Citations & Source URLs</span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Manual Input Option Toggle -->
+      <details class="manual-details">
+        <summary class="manual-summary">Export another chat by ID / URL</summary>
+        <div class="manual-body">
+          <input type="text" id="manual-url" placeholder="https://chatgpt.com/c/... or UUID" class="input-text">
+        </div>
+      </details>
+
+      <!-- Action Button -->
+      <button id="export-btn" class="btn btn-primary" disabled>
+        <span class="btn-text">Export to JSONL</span>
+      </button>
+
+      <!-- Progress / Status Box -->
+      <div id="progress-container" class="progress-box hidden">
+        <div class="progress-bar-bg">
+          <div id="progress-bar-fill" class="progress-bar-fill"></div>
+        </div>
+        <p id="progress-text" class="progress-text">Preparing export...</p>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>Ready for OpenAI, Anthropic, Axolotl & LangChain</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
